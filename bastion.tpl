@@ -80,4 +80,4 @@ EOF
 source /etc/profile.d/vault.sh
 echo "source /etc/profile.d/vault.sh" >> ~ubuntu/.bashrc
 
-hostnamectl set-hostname ssh
+hostnamectl set-hostname bastion

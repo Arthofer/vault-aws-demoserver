@@ -24,10 +24,10 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "vault" {
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.medium"
+  instance_type = var.instance_type
   count         = 1
   subnet_id     = aws_subnet.public_subnet.id
-  key_name      = "cdunlap-aws"
+  key_name      = var.ssh_key_name
 
   security_groups = [
     aws_security_group.vault.id,
@@ -45,7 +45,7 @@ resource "aws_instance" "vault" {
 }
 
 data "template_file" "vault" {
-  template = file("userdata.tpl")
+  template = file("vault.tpl")
 
   vars = {
     kms_key    = aws_kms_key.vault.id

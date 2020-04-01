@@ -30,9 +30,14 @@ variable "vault_db_address" {
   default     = "aws_db_instance.vault.address"
 }
 
+variable "vault_address" {
+  description = "address of the vault ssh host"
+  default     = "aws_instance.vault[0].public_ip"
+}
+
 variable "namespace" {
   description = "Prepended name of all resources"
-  default     = "aws-vault"
+  default     = "vault-db-ssh"
 }
 
 variable "proddb_username" {
@@ -49,4 +54,16 @@ variable "vaultdb_username" {
 
 variable "vaultdb_password" {
   default = "UseHashiCorpVault"
+}
+
+variable "owner" {
+  default = "hashicorp"
+}
+
+variable "ssh_key_name" {
+  default = "my-aws-ssh-key"
+}
+
+variable "instance_type" {
+  default = "t2.micro"
 }

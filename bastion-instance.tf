@@ -1,4 +1,4 @@
-resource "aws_instance" "ssh" {
+resource "aws_instance" "bastion" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
   count         = 1
@@ -17,11 +17,11 @@ resource "aws_instance" "ssh" {
     Name = "${var.namespace}-${random_pet.env.id}-ssh"
   }
 
-  user_data = data.template_file.ssh.rendered
+  user_data = data.template_file.bastion.rendered
 }
 
-data "template_file" "ssh" {
-  template = file("ssh.tpl")
+data "template_file" "bastion" {
+  template = file("bastion.tpl")
 
   vars = {
     vault_url  = var.vault_url
@@ -29,11 +29,3 @@ data "template_file" "ssh" {
     vault_address = var.vault_address
   }
 }
-
-#data "template_file" "format_ssh" {
-#  template = "connect to host with following command: ssh ubuntu@$${admin} -i private.key"
-#
-#  vars = {
-#    admin = aws_instance.ssh[0].public_ip
-#  }
-#}
